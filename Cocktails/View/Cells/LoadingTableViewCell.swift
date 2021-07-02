@@ -9,6 +9,12 @@ import UIKit
 
 class LoadingTableViewCell: UITableViewCell {
 
+    static let identifier = "loadingCellID"
+    
+    static func nib() -> UINib {
+        return UINib(nibName: "LoadingTableViewCell", bundle: nil)
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

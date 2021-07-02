@@ -7,11 +7,17 @@
 
 import UIKit
 
-class IconTitleSubtitleCell: UITableViewCell {
+class IconTitleSubtitleTableViewCell: UITableViewCell {
 
     @IBOutlet weak var icon: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var subtitleLabel: UILabel!
+    
+    static let identifier = "iconTitleSubtitleCellID"
+    
+    static func nib() -> UINib {
+        return UINib(nibName: "IconTitleSubtitleTableViewCell", bundle: nil)
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()

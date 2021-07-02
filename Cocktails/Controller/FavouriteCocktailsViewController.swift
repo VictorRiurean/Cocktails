@@ -39,8 +39,7 @@ class FavouriteCocktailsViewController: UIViewController, UITableViewDelegate, U
     func setupUI() {
         self.title = "Favourite Cocktails"
         
-        let nib = UINib(nibName: "MainCocktailTableViewCell", bundle: nil)
-        tableView.register(nib, forCellReuseIdentifier: "mainCocktailCellID")
+        tableView.register(MainCocktailTableViewCell.nib(), forCellReuseIdentifier: MainCocktailTableViewCell.identifier)
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -64,7 +63,7 @@ class FavouriteCocktailsViewController: UIViewController, UITableViewDelegate, U
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if let cell = tableView.dequeueReusableCell(withIdentifier: "mainCocktailCellID") as? MainCocktailTableViewCell {
+        if let cell = tableView.dequeueReusableCell(withIdentifier: MainCocktailTableViewCell.identifier) as? MainCocktailTableViewCell {
             let index = indexPath.row % AppColors.count
             cell.backgroundColor = AppColors.getColor(index: index)
             cell.layer.cornerRadius = 10

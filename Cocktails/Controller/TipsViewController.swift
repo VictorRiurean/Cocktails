@@ -57,8 +57,7 @@ class TipsViewController: UIViewController, UITableViewDelegate, UITableViewData
     //MARK: - Prepare UI
     
     func setupUI() {
-        let nib = UINib(nibName: "IngredientAndImageCell", bundle: nil)
-        tableView.register(nib, forCellReuseIdentifier: "ingredientAndImageCellID")
+        tableView.register(IngredientAndImageTableViewCell.nib(), forCellReuseIdentifier: IngredientAndImageTableViewCell.identifier)
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -79,7 +78,7 @@ class TipsViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if let cell = tableView.dequeueReusableCell(withIdentifier: "ingredientAndImageCellID") as? IngredientAndImageCell {
+        if let cell = tableView.dequeueReusableCell(withIdentifier: IngredientAndImageTableViewCell.identifier) as? IngredientAndImageTableViewCell {
             let index = indexPath.row % AppColors.count
             cell.backgroundColor = AppColors.getColor(index: index)
             cell.label.text = tips[indexPath.row].shortDescription

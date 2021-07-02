@@ -51,9 +51,8 @@ class AssistantViewController: UIViewController, UITableViewDelegate, UITableVie
     
     func setupUI() {
         self.title = "Assistant"
-        
-        let nib = UINib(nibName: "IconTitleSubtitleCell", bundle: nil)
-        tableView.register(nib, forCellReuseIdentifier: "iconTitleSubtitleCellID")
+    
+        tableView.register(IconTitleSubtitleTableViewCell.nib(), forCellReuseIdentifier: IconTitleSubtitleTableViewCell.identifier)
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -69,7 +68,7 @@ class AssistantViewController: UIViewController, UITableViewDelegate, UITableVie
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row == 0 {
-            if let cell = tableView.dequeueReusableCell(withIdentifier: "iconTitleSubtitleCellID") as? IconTitleSubtitleCell {
+            if let cell = tableView.dequeueReusableCell(withIdentifier: IconTitleSubtitleTableViewCell.identifier) as? IconTitleSubtitleTableViewCell {
                 cell.titleLabel.text = "Favourite Cocktails"
                 cell.subtitleLabel.text = "Mark Cocktails as Favourites so you can have quick access to them"
                 cell.icon.image = UIImage(named: "favourite")
@@ -77,7 +76,7 @@ class AssistantViewController: UIViewController, UITableViewDelegate, UITableVie
                 return cell
             }
         } else if indexPath.row == 1 {
-            if let cell = tableView.dequeueReusableCell(withIdentifier: "iconTitleSubtitleCellID") as? IconTitleSubtitleCell {
+            if let cell = tableView.dequeueReusableCell(withIdentifier: IconTitleSubtitleTableViewCell.identifier) as? IconTitleSubtitleTableViewCell {
                 cell.titleLabel.text = "My Cocktails"
                 cell.subtitleLabel.text = "Didn't find your Cocktail in the app? No problem, add it yourself and we will save it for you!"
                 cell.icon.image = UIImage(named: "add")
@@ -85,7 +84,7 @@ class AssistantViewController: UIViewController, UITableViewDelegate, UITableVie
                 return cell
             }
         } else {
-            if let cell = tableView.dequeueReusableCell(withIdentifier: "iconTitleSubtitleCellID") as? IconTitleSubtitleCell {
+            if let cell = tableView.dequeueReusableCell(withIdentifier: IconTitleSubtitleTableViewCell.identifier) as? IconTitleSubtitleTableViewCell {
                 cell.titleLabel.text = "Tips"
                 cell.subtitleLabel.text = "Take a deep dive into some of the more advanced topics of mixology!"
                 cell.icon.image = UIImage(named: "tips")

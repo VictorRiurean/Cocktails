@@ -12,6 +12,12 @@ class GlassCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var imageView: UIImageView!
     
+    static let identifier = "glassCollectionViewCellID"
+    
+    static func nib() -> UINib {
+        return UINib(nibName: "GlassCollectionViewCell", bundle: nil)
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

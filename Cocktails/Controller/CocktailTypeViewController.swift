@@ -29,8 +29,7 @@ class CocktailTypeViewController: UIViewController, UICollectionViewDelegate, UI
     //MARK: - Prepare UI
     
     func setupUI() {
-        let nib = UINib(nibName: "GlassCollectionViewCell", bundle: nil)
-        collectionView.register(nib, forCellWithReuseIdentifier: "collectionCellID")
+        collectionView.register(GlassCollectionViewCell.nib(), forCellWithReuseIdentifier: GlassCollectionViewCell.identifier)
         
         collectionView.delegate = self
         collectionView.dataSource = self
@@ -93,7 +92,7 @@ class CocktailTypeViewController: UIViewController, UICollectionViewDelegate, UI
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "collectionCellID", for: indexPath) as? GlassCollectionViewCell {
+        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GlassCollectionViewCell.identifier, for: indexPath) as? GlassCollectionViewCell {
             cell.nameLabel.text = drinks[indexPath.row].strDrink
             if let image = drinks[indexPath.row].strDrinkThumb {
                 cell.imageView.downloaded(from: image)

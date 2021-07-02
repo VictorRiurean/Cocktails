@@ -9,6 +9,17 @@ import UIKit
 import RealmSwift
 
 class MainCocktailTableViewCell: UITableViewCell {
+
+    @IBOutlet weak var cocktailNameLabel: UILabel!
+    @IBOutlet weak var ingredientsLabel: UILabel!
+    @IBOutlet weak var icon: UIImageView!
+    @IBOutlet weak var favouritesButton: UIButton!
+    
+    static let identifier = "mainCocktailCellID"
+    
+    static func nib() -> UINib {
+        return UINib(nibName: "MainCocktailTableViewCell", bundle: nil)
+    }
     
     var realm: Realm? = {
         do {
@@ -19,11 +30,6 @@ class MainCocktailTableViewCell: UITableViewCell {
             return nil
         }
     }()
-
-    @IBOutlet weak var cocktailNameLabel: UILabel!
-    @IBOutlet weak var ingredientsLabel: UILabel!
-    @IBOutlet weak var icon: UIImageView!
-    @IBOutlet weak var favouritesButton: UIButton!
     
     override func awakeFromNib() {
         super.awakeFromNib()

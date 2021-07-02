@@ -59,14 +59,14 @@ class GlassesViewController: UIViewController, UITableViewDelegate, UITableViewD
     func setupUI() {
         self.title = "Glasses"
         
-        let nib = UINib(nibName: "GlassCell", bundle: nil)
-        tableView.register(nib, forCellReuseIdentifier: "glassCellID")
-        
-        getGlasses()
+        tableView.register(GlassTableViewCell.nib(), forCellReuseIdentifier: GlassTableViewCell.identifier)
         
         tableView.delegate = self
         tableView.dataSource = self
+        
         searchBar.delegate = self
+        
+        getGlasses()
         
         spinner.hidesWhenStopped = true
         spinner.color = .blue
@@ -108,7 +108,7 @@ class GlassesViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if let cell = tableView.dequeueReusableCell(withIdentifier: "glassCellID") as? GlassCell {
+        if let cell = tableView.dequeueReusableCell(withIdentifier: GlassTableViewCell.identifier) as? GlassTableViewCell {
             cell.nameLabel.text = filteredGlasses[indexPath.row].strGlass
             return cell
         }

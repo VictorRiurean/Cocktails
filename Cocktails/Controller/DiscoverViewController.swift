@@ -10,13 +10,9 @@ import Alamofire
 import SDWebImage
 import RealmSwift
 
-class DiscoverViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-
-    @IBOutlet weak var cocktailCategoriesCollectionView: UICollectionView!
-    @IBOutlet weak var iconicCocktailsCollectionView: UICollectionView!
-    @IBOutlet weak var alcoholicButton: UIButton!
-    @IBOutlet weak var nonAlcoholicButton: UIButton!
-    @IBOutlet weak var showMoreButton: UIButton!
+class DiscoverViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, DidTouchButtonProtocol, DidTouchAlcoholicNonAlcoholicProtocol, GoToCategoriesProtocol, GoToCocktailDetailsProtocol {
+    
+    @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var spinner: UIActivityIndicatorView!
     
     var customView = UIView()
@@ -29,7 +25,7 @@ class DiscoverViewController: UIViewController, UICollectionViewDelegate, UIColl
     
     var api = ""
     var apiBase = "https://thecocktaildb.com/api/json/v1/1/search.php?f="
-   
+    
     let defaults = UserDefaults.standard
     let gotAllCocktailsKey = "sawTutorialBool"
     
@@ -47,7 +43,7 @@ class DiscoverViewController: UIViewController, UICollectionViewDelegate, UIColl
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
     }
     
     //MARK: - Check internet
@@ -96,28 +92,16 @@ class DiscoverViewController: UIViewController, UICollectionViewDelegate, UIColl
             UserDefaults.standard.setValue(true, forKey: gotAllCocktailsKey)
         }
         
-        let nib = UINib(nibName: "TitleCollectionViewCell", bundle: nil)
-        let nib1 = UINib(nibName: "GlassCollectionViewCell", bundle: nil)
-        cocktailCategoriesCollectionView.register(nib, forCellWithReuseIdentifier: "titleCollectionViewCellID")
-        iconicCocktailsCollectionView.register(nib1, forCellWithReuseIdentifier: "collectionCellID")
+        tableView.register(HorizontalCollectionTableViewCell.nib(), forCellReuseIdentifier: HorizontalCollectionTableViewCell.identifier)
+        tableView.register(VerticalCollectionTableViewCell.nib(), forCellReuseIdentifier: VerticalCollectionTableViewCell.identifier)
+        tableView.register(ShowMoreButtonTableViewCell.nib(), forCellReuseIdentifier: ShowMoreButtonTableViewCell.identifier)
+        tableView.register(AlcoholicNonAlcoholicTableViewCell.nib(), forCellReuseIdentifier: AlcoholicNonAlcoholicTableViewCell.identifier)
         
-        cocktailCategoriesCollectionView.delegate = self
-        cocktailCategoriesCollectionView.dataSource = self
-        iconicCocktailsCollectionView.delegate = self
-        iconicCocktailsCollectionView.dataSource = self
+        tableView.delegate = self
+        tableView.dataSource = self
         
-        if let flowLayout = cocktailCategoriesCollectionView?.collectionViewLayout as? UICollectionViewFlowLayout {
-            flowLayout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
-        }
+        tableView.allowsSelection = false
         
-        showMoreButton.backgroundColor = .red
-        showMoreButton.layer.cornerRadius = 5
-        
-        alcoholicButton.clipsToBounds = true
-        alcoholicButton.setBackgroundImage(UIImage(named: "alcoholic"), for: .normal)
-        nonAlcoholicButton.clipsToBounds = true
-        nonAlcoholicButton.setBackgroundImage(UIImage(named: "nonAlcoholic"), for: .normal)
-    
         if !self.categories.isEmpty && !self.randomCocktails.isEmpty {
             spinner.stopAnimating()
         } else {
@@ -138,7 +122,7 @@ class DiscoverViewController: UIViewController, UICollectionViewDelegate, UIColl
                         self.categories = categoryList.drinks
                     }
                     DispatchQueue.main.async {
-                        self.cocktailCategoriesCollectionView.reloadData()
+                        self.tableView.reloadData()
                     }
                 }
             }
@@ -160,8 +144,7 @@ class DiscoverViewController: UIViewController, UICollectionViewDelegate, UIColl
                             self.randomCocktails.append(randomCocktail.drinks[0])
                         }
                         DispatchQueue.main.async {
-                            self.cocktailCategoriesCollectionView.reloadData()
-                            self.iconicCocktailsCollectionView.reloadData()
+                            self.tableView.reloadData()
                             if index == 2 {
                                 self.spinner.stopAnimating()
                             }
@@ -202,9 +185,121 @@ class DiscoverViewController: UIViewController, UICollectionViewDelegate, UIColl
         }
     }
     
-    //MARK: - Buttons
+    //MARK: - Table View
     
-    @IBAction func didTouchAlcoholicButton(_ sender: Any) {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 3
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if section == 0 {
+            return 1
+        } else if section == 1 {
+            return 2
+        } else {
+            return 1
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if indexPath.section == 1 {
+            if indexPath.row == 0 {
+                let screenSize = UIScreen.main.bounds
+                return screenSize.height * 0.4
+            } else {
+                return 80
+            }
+        } else {
+            return 100
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if section == 0 {
+            return "Cocktail Categories"
+        } else if section == 1 {
+            return "Iconic Cocktails"
+        } else {
+            return "Cocktail Types"
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        (view as! UITableViewHeaderFooterView).contentView.backgroundColor = UIColor.white
+        (view as! UITableViewHeaderFooterView).textLabel?.font.withSize(50)
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if indexPath.section == 0 {
+            if let cell = tableView.dequeueReusableCell(withIdentifier: HorizontalCollectionTableViewCell.identifier) as? HorizontalCollectionTableViewCell {
+                cell.categories = self.categories
+                cell.collectionView.reloadData()
+                cell.delegate = self
+                return cell
+            }
+            return UITableViewCell()
+        } else if indexPath.section == 1 {
+            if indexPath.row == 0 {
+                if let cell = tableView.dequeueReusableCell(withIdentifier: VerticalCollectionTableViewCell.identifier) as? VerticalCollectionTableViewCell {
+                    cell.randomCocktail = self.randomCocktail
+                    cell.randomCocktails = self.randomCocktails
+                    cell.collectionView.reloadData()
+                    cell.delegate = self
+                    return cell
+                }
+                return UITableViewCell()
+            } else {
+                if let cell = tableView.dequeueReusableCell(withIdentifier: ShowMoreButtonTableViewCell.identifier) as? ShowMoreButtonTableViewCell {
+                    cell.delegate = self
+                    return cell
+                }
+                return UITableViewCell()
+            }
+        } else {
+            if let cell = tableView.dequeueReusableCell(withIdentifier: AlcoholicNonAlcoholicTableViewCell.identifier) as? AlcoholicNonAlcoholicTableViewCell {
+                cell.delegate = self
+                return cell
+            }
+            return UITableViewCell()
+        }
+    }
+    
+    //MARK: - Protocol Methods
+    
+    func goToCategoriesController(with index: Int) {
+        if let vc = storyboard?.instantiateViewController(identifier: "categoryDetailsVC") as? CategoryDetailsViewController {
+            let api = "https://thecocktaildb.com/api/json/v1/1/filter.php?c=" + categories[index].strCategory.lowercased()
+            if let api = api.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) {
+                vc.api = api
+                vc.category = categories[index].strCategory
+            }
+            vc.title = categories[index].strCategory
+            navigationController?.pushViewController(vc, animated: true)
+        }
+    }
+    
+    func goToCocktail(with index: Int) {
+        if let vc = storyboard?.instantiateViewController(identifier: "cocktailDetailsVC") as? CocktailDetailsViewController {
+            let api = "https://thecocktaildb.com/api/json/v1/1/search.php?s=" + randomCocktails[index - 1].strDrink.lowercased()
+            if let api = api.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) {
+                vc.apiKey = api
+            }
+            vc.title = randomCocktails[index - 1].strDrink
+            navigationController?.pushViewController(vc, animated: true)
+        }
+    }
+    
+    func goToRandomCocktail() {
+        if let vc = storyboard?.instantiateViewController(identifier: "cocktailDetailsVC") as? CocktailDetailsViewController {
+            let api = "https://thecocktaildb.com/api/json/v1/1/random.php"
+            if let api = api.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) {
+                vc.apiKey = api
+            }
+            navigationController?.pushViewController(vc, animated: true)
+        }
+    }
+    
+    func didTouchAlcoholicButton() {
         if let vc = storyboard?.instantiateViewController(identifier: "cocktailTypeVC") as? CocktailTypeViewController {
             vc.segment = 0
             vc.api = "https://thecocktaildb.com/api/json/v1/1/filter.php?a=Alcoholic"
@@ -213,7 +308,7 @@ class DiscoverViewController: UIViewController, UICollectionViewDelegate, UIColl
         }
     }
     
-    @IBAction func didTouchNonAlcoholicButton(_ sender: Any) {
+    func didTouchNonAlcoholicButton() {
         if let vc = storyboard?.instantiateViewController(identifier: "cocktailTypeVC") as? CocktailTypeViewController {
             vc.segment = 1
             vc.api = "https://thecocktaildb.com/api/json/v1/1/filter.php?a=Non_Alcoholic"
@@ -222,106 +317,7 @@ class DiscoverViewController: UIViewController, UICollectionViewDelegate, UIColl
         }
     }
     
-    @IBAction func didTouchShowMoreButton(_ sender: Any) {
+    func didTouchShowMoreButton() {
         self.tabBarController?.selectedIndex = 1
-    }
-    
-    //MARK: - Collection View
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if collectionView == cocktailCategoriesCollectionView {
-            return categories.count
-        } else {
-            return randomCocktails.count + 1
-        }
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if collectionView == cocktailCategoriesCollectionView {
-            if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "titleCollectionViewCellID", for: indexPath) as? TitleCollectionViewCell {
-                cell.nameLabel.text = categories[indexPath.row].strCategory
-                cell.nameLabel.sizeToFit()
-                let index = indexPath.row % AppColors.count
-                cell.backgroundColor = AppColors.getColor(index: index)
-                cell.layer.cornerRadius = 5
-                cell.layer.masksToBounds = true
-                return cell
-            }
-            return UICollectionViewCell()
-        } else {
-            if indexPath.row == 0 {
-                if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "collectionCellID", for: indexPath) as? GlassCollectionViewCell {
-                    cell.nameLabel.text = "Surprize me!"
-                    cell.nameLabel.sizeToFit()
-                    cell.imageView.image = UIImage(named: "tomato")
-                    let index = indexPath.row % AppColors.count
-                    cell.backgroundColor = AppColors.getColor(index: index)
-                    cell.layer.cornerRadius = 10
-                    cell.layer.masksToBounds = true
-                    return cell
-                }
-            } else {
-                if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "collectionCellID", for: indexPath) as? GlassCollectionViewCell {
-                    cell.nameLabel.text = randomCocktails[indexPath.row - 1].strDrink
-                    cell.nameLabel.sizeToFit()
-                    if let url = randomCocktails[indexPath.row - 1].strDrinkThumb {
-                        cell.imageView.sd_setImage(with: URL(string: url), completed: nil)
-                    }
-                    let index = indexPath.row % AppColors.count
-                    cell.backgroundColor = AppColors.getColor(index: index)
-                    cell.layer.cornerRadius = 10
-                    cell.layer.masksToBounds = true
-                    return cell
-                }
-            }
-            return UICollectionViewCell()
-        }
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        if collectionView == iconicCocktailsCollectionView {
-            let screenSize: CGRect = iconicCocktailsCollectionView.bounds
-            let width = (screenSize.width - 20) / 2
-            let height = (screenSize.height - 20) / 2
-            return CGSize(width: width, height: height)
-        } else {
-            let screenSize: CGRect = cocktailCategoriesCollectionView.bounds
-            let width = (screenSize.width - 30) / 2.2
-            let height = screenSize.height
-            return CGSize(width: width, height: height)
-        }
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if collectionView == cocktailCategoriesCollectionView {
-            if let vc = storyboard?.instantiateViewController(identifier: "categoryDetailsVC") as? CategoryDetailsViewController {
-                let api = "https://thecocktaildb.com/api/json/v1/1/filter.php?c=" + categories[indexPath.row].strCategory.lowercased()
-                if let api = api.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) {
-                    vc.api = api
-                    vc.category = categories[indexPath.row].strCategory
-                }
-                vc.title = categories[indexPath.row].strCategory
-                navigationController?.pushViewController(vc, animated: true)
-            }
-        } else {
-            if indexPath.row == 0 {
-                if let vc = storyboard?.instantiateViewController(identifier: "cocktailDetailsVC") as? CocktailDetailsViewController {
-                    let api = "https://thecocktaildb.com/api/json/v1/1/random.php"
-                    if let api = api.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) {
-                        vc.apiKey = api
-                    }
-                    navigationController?.pushViewController(vc, animated: true)
-                }
-            } else {
-                if let vc = storyboard?.instantiateViewController(identifier: "cocktailDetailsVC") as? CocktailDetailsViewController {
-                    let api = "https://thecocktaildb.com/api/json/v1/1/search.php?s=" + randomCocktails[indexPath.row - 1].strDrink.lowercased()
-                    if let api = api.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) {
-                        vc.apiKey = api
-                    }
-                    vc.title = randomCocktails[indexPath.row - 1].strDrink
-                    navigationController?.pushViewController(vc, animated: true)
-                }
-            }
-        }
     }
 }

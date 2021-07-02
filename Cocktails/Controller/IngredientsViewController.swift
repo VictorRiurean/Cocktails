@@ -60,8 +60,7 @@ class IngredientsViewController: UIViewController, UITableViewDelegate, UITableV
     func setupUI() {
         self.title = "Ingredients"
         
-        let nib = UINib(nibName: "IngredientAndImageCell", bundle: nil)
-        tableView.register(nib, forCellReuseIdentifier: "ingredientAndImageCellID")
+        tableView.register(IngredientAndImageTableViewCell.nib(), forCellReuseIdentifier: IngredientAndImageTableViewCell.identifier)
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -109,7 +108,7 @@ class IngredientsViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if let cell = tableView.dequeueReusableCell(withIdentifier: "ingredientAndImageCellID") as? IngredientAndImageCell {
+        if let cell = tableView.dequeueReusableCell(withIdentifier: IngredientAndImageTableViewCell.identifier) as? IngredientAndImageTableViewCell {
             let index = indexPath.row % AppColors.count
             cell.backgroundColor = AppColors.getColor(index: index)
             cell.label.text = filteredIngredients[indexPath.row].strIngredient1

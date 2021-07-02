@@ -7,9 +7,15 @@
 
 import UIKit
 
-class IngredientsCell: UITableViewCell {
+class IngredientsTableViewCell: UITableViewCell {
 
     @IBOutlet weak var nameLabel: UILabel!
+    
+    static let identifier = "ingredientsCellID"
+    
+    static func nib() -> UINib {
+        return UINib(nibName: "IngredientsTableViewCell", bundle: nil)
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()

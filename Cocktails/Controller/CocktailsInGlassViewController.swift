@@ -25,8 +25,7 @@ class CocktailsInGlassViewController: UIViewController, UICollectionViewDelegate
     //MARK: - Prepare UI
     
     func setupUI() {
-        let nib = UINib(nibName: "GlassCollectionViewCell", bundle: nil)
-        collectionView.register(nib, forCellWithReuseIdentifier: "collectionCellID")
+        collectionView.register(GlassCollectionViewCell.nib(), forCellWithReuseIdentifier: GlassCollectionViewCell.identifier)
         
         getGlasses()
         
@@ -72,7 +71,7 @@ class CocktailsInGlassViewController: UIViewController, UICollectionViewDelegate
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "collectionCellID", for: indexPath) as? GlassCollectionViewCell {
+        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GlassCollectionViewCell.identifier, for: indexPath) as? GlassCollectionViewCell {
             let index = indexPath.row % AppColors.count
             cell.backgroundColor = AppColors.getColor(index: index)
             cell.nameLabel.text = glasses[indexPath.row].strDrink

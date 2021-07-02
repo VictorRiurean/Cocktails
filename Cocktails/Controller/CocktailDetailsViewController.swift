@@ -49,11 +49,8 @@ class CocktailDetailsViewController: UIViewController, UITableViewDelegate, UITa
     }
     
     func setupUI() {
-        let nib = UINib(nibName: "CocktailDetailsCell", bundle: nil)
-        tableView.register(nib, forCellReuseIdentifier: "cocktailDetailsCellID")
-        
-        let nib1 = UINib(nibName: "IngredientsCell", bundle: nil)
-        tableView.register(nib1, forCellReuseIdentifier: "ingredientsCellID")
+        tableView.register(CocktailDetailsTableViewCell.nib(), forCellReuseIdentifier: CocktailDetailsTableViewCell.identifier)
+        tableView.register(IngredientsTableViewCell.nib(), forCellReuseIdentifier: IngredientsTableViewCell.identifier)
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -268,7 +265,7 @@ class CocktailDetailsViewController: UIViewController, UITableViewDelegate, UITa
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         tableView.deselectRow(at: indexPath, animated: true)
         if indexPath.section == 0 {
-            if let cell = tableView.dequeueReusableCell(withIdentifier: "cocktailDetailsCellID") as? CocktailDetailsCell {
+            if let cell = tableView.dequeueReusableCell(withIdentifier: CocktailDetailsTableViewCell.identifier) as? CocktailDetailsTableViewCell {
                 if !cocktails.isEmpty {
                     if let image = cocktails[0].strDrinkThumb {
                         cell.cocktailImageView.downloaded(from: image)
@@ -280,7 +277,7 @@ class CocktailDetailsViewController: UIViewController, UITableViewDelegate, UITa
             }
             return UITableViewCell()
         } else if indexPath.section == 1 {
-            if let cell = tableView.dequeueReusableCell(withIdentifier: "ingredientsCellID") as? IngredientsCell {
+            if let cell = tableView.dequeueReusableCell(withIdentifier: IngredientsTableViewCell.identifier) as? IngredientsTableViewCell {
                 if !ingredients.isEmpty {
                     cell.nameLabel.text = measures[indexPath.row] + ingredients[indexPath.row]
                     let index = indexPath.row % AppColors.count
@@ -293,7 +290,7 @@ class CocktailDetailsViewController: UIViewController, UITableViewDelegate, UITa
                 }
             }
         } else if indexPath.section == 2 {
-            if let cell = tableView.dequeueReusableCell(withIdentifier: "ingredientsCellID") as? IngredientsCell {
+            if let cell = tableView.dequeueReusableCell(withIdentifier: IngredientsTableViewCell.identifier) as? IngredientsTableViewCell {
                 if !cocktails.isEmpty {
                     cell.nameLabel.text = cocktails[0].strInstructions
                     cell.nameLabel.sizeToFit()

@@ -90,11 +90,8 @@ class CocktailsViewController: UIViewController, UITableViewDelegate, UITableVie
 //    }
     
     func setupUI() {
-        let nib = UINib(nibName: "MainCocktailTableViewCell", bundle: nil)
-        tableView.register(nib, forCellReuseIdentifier: "mainCocktailCellID")
-        
-        let loadingNib = UINib(nibName: "LoadingTableViewCell", bundle: nil)
-        tableView.register(loadingNib, forCellReuseIdentifier: "loadingCellID")
+        tableView.register(MainCocktailTableViewCell.nib(), forCellReuseIdentifier: MainCocktailTableViewCell.identifier)
+        tableView.register(LoadingTableViewCell.nib(), forCellReuseIdentifier: LoadingTableViewCell.identifier)
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -181,13 +178,13 @@ class CocktailsViewController: UIViewController, UITableViewDelegate, UITableVie
         }
         
         if cocktails.count == 0 && isLoading[indexPath.section] {
-            if let cell = tableView.dequeueReusableCell(withIdentifier: "loadingCellID") as? LoadingTableViewCell {
+            if let cell = tableView.dequeueReusableCell(withIdentifier: LoadingTableViewCell.identifier) as? LoadingTableViewCell {
                 cell.textLabel?.text = "Loading cocktails ..."
                 return cell
             }
         }
         
-        if let cell = tableView.dequeueReusableCell(withIdentifier: "mainCocktailCellID") as? MainCocktailTableViewCell {
+        if let cell = tableView.dequeueReusableCell(withIdentifier: MainCocktailTableViewCell.identifier) as? MainCocktailTableViewCell {
             let index = indexPath.row % AppColors.count
             cell.backgroundColor = AppColors.getColor(index: index)
             cell.layer.cornerRadius = 10

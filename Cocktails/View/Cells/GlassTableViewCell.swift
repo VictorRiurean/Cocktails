@@ -7,9 +7,15 @@
 
 import UIKit
 
-class GlassCell: UITableViewCell {
+class GlassTableViewCell: UITableViewCell {
 
     @IBOutlet weak var nameLabel: UILabel!
+    
+    static let identifier = "glassCellID"
+    
+    static func nib() -> UINib {
+        return UINib(nibName: "GlassTableViewCell", bundle: nil)
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()
