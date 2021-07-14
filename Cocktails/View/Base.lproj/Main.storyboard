@@ -54,20 +54,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="E7z-eD-cHe">
-                                <rect key="frame" x="20" y="44" width="374" height="250"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="250" id="oRP-90-Tes"/>
-                                </constraints>
-                            </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Cocktails with " textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fxj-89-D2y">
-                                <rect key="frame" x="119.5" y="319" width="175" height="33.5"/>
-                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="4EX-2B-k5x">
-                                <rect key="frame" x="20" y="372.5" width="374" height="489.5"/>
+                                <rect key="frame" x="20" y="44" width="374" height="818"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="XvS-g3-eYt">
                                     <size key="itemSize" width="128" height="128"/>
@@ -95,20 +83,13 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="VZz-bh-MVg" firstAttribute="trailing" secondItem="4EX-2B-k5x" secondAttribute="trailing" constant="20" id="AdM-rs-mOg"/>
-                            <constraint firstItem="VZz-bh-MVg" firstAttribute="trailing" secondItem="E7z-eD-cHe" secondAttribute="trailing" constant="20" id="IRf-gx-JK2"/>
                             <constraint firstItem="4EX-2B-k5x" firstAttribute="leading" secondItem="VZz-bh-MVg" secondAttribute="leading" constant="20" id="RZ9-BF-Ang"/>
                             <constraint firstItem="VZz-bh-MVg" firstAttribute="bottom" secondItem="4EX-2B-k5x" secondAttribute="bottom" id="eSN-rs-559"/>
-                            <constraint firstItem="fxj-89-D2y" firstAttribute="centerX" secondItem="YcA-eq-ZYd" secondAttribute="centerX" id="mEi-WF-Io2"/>
-                            <constraint firstItem="E7z-eD-cHe" firstAttribute="top" secondItem="VZz-bh-MVg" secondAttribute="top" id="qpy-1m-OOL"/>
-                            <constraint firstItem="fxj-89-D2y" firstAttribute="top" secondItem="E7z-eD-cHe" secondAttribute="bottom" constant="25" id="tJm-dn-o7A"/>
-                            <constraint firstItem="4EX-2B-k5x" firstAttribute="top" secondItem="fxj-89-D2y" secondAttribute="bottom" constant="20" id="xdL-Mf-ij6"/>
-                            <constraint firstItem="E7z-eD-cHe" firstAttribute="leading" secondItem="VZz-bh-MVg" secondAttribute="leading" constant="20" id="yzd-Iw-Iae"/>
+                            <constraint firstItem="4EX-2B-k5x" firstAttribute="top" secondItem="VZz-bh-MVg" secondAttribute="top" id="ojh-gz-ZHG"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="collectionView" destination="4EX-2B-k5x" id="zke-9k-N44"/>
-                        <outlet property="imageView" destination="E7z-eD-cHe" id="NPd-dD-qIz"/>
-                        <outlet property="nameLabel" destination="fxj-89-D2y" id="rTM-Oq-60Z"/>
                         <outlet property="spinner" destination="YHn-HZ-ouY" id="h5u-6s-lbi"/>
                     </connections>
                 </viewController>

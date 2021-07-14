@@ -55,6 +55,8 @@
 		579D3A70266FB7A700736D3D /* TitleCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579D3A6E266FB7A700736D3D /* TitleCollectionViewCell.swift */; };
 		579D3A71266FB7A700736D3D /* TitleCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 579D3A6F266FB7A700736D3D /* TitleCollectionViewCell.xib */; };
 		579D3A74266FBAB800736D3D /* CategoryDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579D3A73266FBAB800736D3D /* CategoryDetailsViewController.swift */; };
+		57A7A3CF269F5A8A00655C78 /* ImageTitleCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A7A3CD269F5A8A00655C78 /* ImageTitleCollectionViewCell.swift */; };
+		57A7A3D0269F5A8A00655C78 /* ImageTitleCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 57A7A3CE269F5A8A00655C78 /* ImageTitleCollectionViewCell.xib */; };
 		9E0F612D0A37ADDC91C31938 /* Pods_Cocktails.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E7AD1ADD3DDEDBB3771FBD7 /* Pods_Cocktails.framework */; };
 /* End PBXBuildFile section */
 
@@ -111,6 +113,8 @@
 		579D3A6E266FB7A700736D3D /* TitleCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleCollectionViewCell.swift; sourceTree = "<group>"; };
 		579D3A6F266FB7A700736D3D /* TitleCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TitleCollectionViewCell.xib; sourceTree = "<group>"; };
 		579D3A73266FBAB800736D3D /* CategoryDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryDetailsViewController.swift; sourceTree = "<group>"; };
+		57A7A3CD269F5A8A00655C78 /* ImageTitleCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageTitleCollectionViewCell.swift; sourceTree = "<group>"; };
+		57A7A3CE269F5A8A00655C78 /* ImageTitleCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImageTitleCollectionViewCell.xib; sourceTree = "<group>"; };
 		6687FFDFFDF455BFE0BDCF36 /* Pods-Cocktails.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Cocktails.debug.xcconfig"; path = "Target Support Files/Pods-Cocktails/Pods-Cocktails.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -132,6 +136,7 @@
 				57804877267A32FF00FFB972 /* MainCocktailTableViewCell.swift */,
 				57804878267A32FF00FFB972 /* MainCocktailTableViewCell.xib */,
 				5799701F2652B4F400E8A707 /* GlassTableViewCell.swift */,
+				579970202652B4F400E8A707 /* GlassTableViewCell.xib */,
 				579132A8268E00A500BE8D69 /* HorizontalCollectionTableViewCell.swift */,
 				579132A9268E00A500BE8D69 /* HorizontalCollectionTableViewCell.xib */,
 				572AD00E268E2BED0086A976 /* ShowMoreButtonTableViewCell.swift */,
@@ -140,13 +145,14 @@
 				572AD00A268E26790086A976 /* AlcoholicNonAlcoholicTableViewCell.xib */,
 				572AD004268E24F50086A976 /* VerticalCollectionTableViewCell.swift */,
 				572AD005268E24F50086A976 /* VerticalCollectionTableViewCell.xib */,
-				579970202652B4F400E8A707 /* GlassTableViewCell.xib */,
 				579D3A6E266FB7A700736D3D /* TitleCollectionViewCell.swift */,
 				579D3A6F266FB7A700736D3D /* TitleCollectionViewCell.xib */,
 				5783DB112668EBE1009B0EFA /* IconTitleSubtitleTableViewCell.swift */,
 				5783DB122668EBE1009B0EFA /* IconTitleSubtitleTableViewCell.xib */,
 				5799703C2655542B00E8A707 /* IngredientsTableViewCell.swift */,
 				5799703D2655542B00E8A707 /* IngredientsTableViewCell.xib */,
+				57A7A3CD269F5A8A00655C78 /* ImageTitleCollectionViewCell.swift */,
+				57A7A3CE269F5A8A00655C78 /* ImageTitleCollectionViewCell.xib */,
 				5785F003266520F40033DFED /* IngredientAndImageTableViewCell.swift */,
 				5785F004266520F40033DFED /* IngredientAndImageTableViewCell.xib */,
 				5780487226768A1100FFB972 /* LoadingTableViewCell.swift */,
@@ -311,6 +317,7 @@
 				5780487A267A32FF00FFB972 /* MainCocktailTableViewCell.xib in Resources */,
 				5780487526768A1100FFB972 /* LoadingTableViewCell.xib in Resources */,
 				5799703A2655311C00E8A707 /* CocktailDetailsTableViewCell.xib in Resources */,
+				57A7A3D0269F5A8A00655C78 /* ImageTitleCollectionViewCell.xib in Resources */,
 				572AD011268E2BED0086A976 /* ShowMoreButtonTableViewCell.xib in Resources */,
 				579970222652B4F400E8A707 /* GlassTableViewCell.xib in Resources */,
 				579132AB268E00A500BE8D69 /* HorizontalCollectionTableViewCell.xib in Resources */,
@@ -390,6 +397,7 @@
 				57996FF9265277FF00E8A707 /* AppDelegate.swift in Sources */,
 				5799703E2655542B00E8A707 /* IngredientsTableViewCell.swift in Sources */,
 				572AD010268E2BED0086A976 /* ShowMoreButtonTableViewCell.swift in Sources */,
+				57A7A3CF269F5A8A00655C78 /* ImageTitleCollectionViewCell.swift in Sources */,
 				5780487426768A1100FFB972 /* LoadingTableViewCell.swift in Sources */,
 				5785F005266520F40033DFED /* IngredientAndImageTableViewCell.swift in Sources */,
 				57997034265308A900E8A707 /* CocktailDetailsViewController.swift in Sources */,

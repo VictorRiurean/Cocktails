@@ -118,8 +118,8 @@ class GlassesViewController: UIViewController, UITableViewDelegate, UITableViewD
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         if let vc = storyboard?.instantiateViewController(identifier: "cocktailsInGlassVC") as? CocktailsInGlassViewController {
-            vc.title = glasses[indexPath.section].strGlass
-            let api = "https://thecocktaildb.com/api/json/v1/1/filter.php?g=" + filteredGlasses[indexPath.section].strGlass.lowercased()
+            vc.title = glasses[indexPath.row].strGlass
+            let api = "https://thecocktaildb.com/api/json/v1/1/filter.php?g=" + filteredGlasses[indexPath.row].strGlass.lowercased()
             if let api = api.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) {
                 vc.apiKey = api
             }

@@ -22,6 +22,7 @@ class GlassCollectionViewCell: UICollectionViewCell {
         super.awakeFromNib()
         // Initialization code
         self.imageView.layer.cornerRadius = 33
+        nameLabel.sizeToFit()
     }
 
 }
