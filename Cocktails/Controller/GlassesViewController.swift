@@ -127,6 +127,10 @@ class GlassesViewController: UIViewController, UITableViewDelegate, UITableViewD
         }
     }
     
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 50
+    }
+    
     //MARK: - Search
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
